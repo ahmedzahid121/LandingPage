@@ -4,7 +4,6 @@ import image2 from "../assets/2.png";
 import image3 from "../assets/3.png";
 import { useState } from "react";
 
-
 const HomePage = () => {
   const [feedback, setFeedback] = useState("");
   const [email, setEmail] = useState("");
@@ -12,33 +11,24 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     setIsLoading(true);
-
-    const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-    console.log(API_URL);
-
-    try {
-      const response = await fetch(`${API_URL}/feedback`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: feedback, email }),
-      });
-
-      if (response.ok) {
-        setMessage("Thank you for your feedback!");
-        setFeedback("");
-        setEmail("");
-      } else {
-        setMessage("There was an error submitting your feedback. Please try again.");
-      }
-    } catch (error) {
+    console.log(import.meta.env.VITE_BACKEND_API_URL);
+    event.preventDefault();
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/feedback`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: feedback, email }),
+    });
+    if (response.ok) {
+      setMessage("Thank you for your feedback!");
+      setFeedback("");
+      setEmail("");
+    } else {
       setMessage("There was an error submitting your feedback. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
   return (
     <div className="container mx-auto p-4 py-10">
