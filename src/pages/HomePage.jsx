@@ -4,6 +4,7 @@ import image2 from "../assets/2.png";
 import image3 from "../assets/3.png";
 import { useState } from "react";
 
+
 const HomePage = () => {
   const [feedback, setFeedback] = useState("");
   const [email, setEmail] = useState("");
